@@ -3,6 +3,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import os
 import datetime
 import calendar
+import json
 from utils import parse_expense_message, parse_fixed_expense, parse_income, parse_budget_query, parse_budget_limit
 
 class GoogleSheetService:
@@ -13,12 +14,23 @@ class GoogleSheetService:
         self.sheet_id = os.getenv('GOOGLE_SHEET_ID')
         
     def connect(self):
-        if not os.path.exists(self.creds_file):
-            return False
         try:
-            self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.creds_file, self.scope)
-            self.client = gspread.authorize(self.creds)
-            return True
+            # Try to load from environment variable first (for Render deployment)
+            creds_json = os.getenv('GOOGLE_CREDENTIALS_JSON')
+            if creds_json:
+                creds_dict = json.loads(creds_json)
+                self.creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, self.scope)
+                self.client = gspread.authorize(self.creds)
+                return True
+            
+            # Fallback to credentials.json file (for local development)
+            if os.path.exists(self.creds_file):
+                self.creds = ServiceAccountCredentials.from_json_keyfile_name(self.creds_file, self.scope)
+                self.client = gspread.authorize(self.creds)
+                return True
+            
+            print("No credentials found. Set GOOGLE_CREDENTIALS_JSON env var or provide credentials.json")
+            return False
         except Exception as e:
             print(f"Failed to connect to Google Sheets: {e}")
             return False

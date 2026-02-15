@@ -15,10 +15,11 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer ${{ secrets.ZEABUR_API_TOKEN }}" \
             -H "Content-Type: application/json" \
-            https://gateway.zeabur.com/graphql \
+            https://api.zeabur.com/graphql \
             -d '{
-              "query": "mutation { suspendService(serviceID: \"${{ secrets.ZEABUR_SERVICE_ID }}\") }"
+              "query": "mutation { suspendService(serviceID: \"${{ secrets.ZEABUR_SERVICE_ID }}\", environmentID: \"${{ secrets.ZEABUR_ENVIRONMENT_ID }}\") }"
             }'
+
       
       - name: Notify Success
         run: echo "🌙 Bot stopped successfully at $(date)"

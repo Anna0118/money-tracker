@@ -106,17 +106,21 @@ Zeabur 會自動部署並啟動你的機器人。在 **"Logs"** 標籤中可以�
    - 點擊 "Create Token"
    - 複製 Token
 
-2. **取得 Service ID**
+2. **取得 Service ID 和 Environment ID**
    - 在 Zeabur 服務頁面的 URL 中找到
-   - 格式：`https://dash.zeabur.com/projects/xxx/services/[這串就是Service ID]`
+   - 格式：`https://dash.zeabur.com/projects/xxx/services/[Service ID]?environmentID=[Environment ID]`
+   - Service ID: URL 中 `/services/` 後面的部分
+   - Environment ID: URL 參數中的 `environmentID` 值（通常是 `production`）
 
 3. **設定 GitHub Secrets**
    - 前往 GitHub Repository → Settings → Secrets and variables → Actions
-   - 新增兩個 secrets：
+   - 新增三個 secrets：
      - `ZEABUR_API_TOKEN`: 你的 Zeabur API Token
      - `ZEABUR_SERVICE_ID`: 你的 Service ID
+     - `ZEABUR_ENVIRONMENT_ID`: 你的 Environment ID（通常是 `production`）
 
 4. **啟用 GitHub Actions**
+
    - 推送程式碼後，GitHub Actions 會自動執行
    - 每天 08:00 自動啟動，23:00 自動停止
 

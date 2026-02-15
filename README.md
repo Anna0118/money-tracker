@@ -52,7 +52,7 @@ pip install -r requirements.txt
 python app.py
 ```
 
-## Render 部署
+## Zeabur 部署
 
 ### 1. 準備 GitHub Repository
 
@@ -68,27 +68,30 @@ git branch -M main
 git push -u origin main
 ```
 
-### 2. 在 Render 建立服務
+### 2. 在 Zeabur 建立專案
 
-1. 前往 [Render Dashboard](https://dashboard.render.com/)
-2. 點擊 "New +" → "Web Service"
-3. 連接你的 GitHub repository
-4. Render 會自動偵測 `render.yaml` 配置
+1. 前往 [Zeabur Dashboard](https://dash.zeabur.com/)
+2. 使用 GitHub 帳號登入
+3. 點擊 **"Create Project"**
+4. 選擇 **"Deploy New Service"** → **"GitHub"**
+5. 選擇你的 repository: `money-tracker`
+6. Zeabur 會自動偵測為 Python 專案並開始部署
 
 ### 3. 設定環境變數
 
-在 Render 服務設定中，新增以下環境變數：
+在 Zeabur 服務設定中，點擊 **"Variables"** 標籤，新增以下環境變數：
 
 - `DISCORD_BOT_TOKEN`: 你的 Discord 機器人 Token
 - `DISCORD_CHANNEL_ID`: 提醒頻道 ID（選填）
 - `GOOGLE_SHEET_ID`: Google 試算表 ID
 - `GOOGLE_CREDENTIALS_JSON`: Google Service Account 憑證的 **完整 JSON 內容**
 
-> **注意**: `GOOGLE_CREDENTIALS_JSON` 應該是整個 `credentials.json` 檔案的內容，複製貼上整個 JSON 字串。
+> **注意**: `GOOGLE_CREDENTIALS_JSON` 應該是整個 `credentials.json` 檔案的內容，複製貼上整個 JSON 字串（包含所有大括號和引號）。
 
-### 4. 部署
+### 4. 部署完成
 
-點擊 "Create Web Service"，Render 會自動開始部署。
+Zeabur 會自動部署並啟動你的機器人。在 **"Logs"** 標籤中可以看到運行狀態。
+
 
 ## Google Sheets 結構
 

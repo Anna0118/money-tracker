@@ -1,0 +1,24 @@
+name: Start Bot (Morning)
+
+on:
+  schedule:
+    # 每天早上 8:00 (UTC 0:00) 啟動
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允許手動觸發
+
+jobs:
+  start-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Zeabur Service
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.ZEABUR_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://gateway.zeabur.com/graphql \
+            -d '{
+              "query": "mutation { restartService(serviceID: \"${{ secrets.ZEABUR_SERVICE_ID }}\") }"
+            }'
+      
+      - name: Notify Success
+        run: echo "✅ Bot started successfully at $(date)"

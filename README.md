@@ -92,6 +92,34 @@ git push -u origin main
 
 Zeabur 會自動部署並啟動你的機器人。在 **"Logs"** 標籤中可以看到運行狀態。
 
+### 5. 自動排程（選用 - 完全免費方案）
+
+如果想完全在免費額度內使用，可以設定自動排程：
+
+**運行時間**：每天 08:00-23:00（15 小時）
+**成本**：約 $3.15/月（完全在 $5 免費額度內）
+
+#### 設定步驟
+
+1. **取得 Zeabur API Token**
+   - 前往 [Zeabur Settings](https://dash.zeabur.com/account/developer)
+   - 點擊 "Create Token"
+   - 複製 Token
+
+2. **取得 Service ID**
+   - 在 Zeabur 服務頁面的 URL 中找到
+   - 格式：`https://dash.zeabur.com/projects/xxx/services/[這串就是Service ID]`
+
+3. **設定 GitHub Secrets**
+   - 前往 GitHub Repository → Settings → Secrets and variables → Actions
+   - 新增兩個 secrets：
+     - `ZEABUR_API_TOKEN`: 你的 Zeabur API Token
+     - `ZEABUR_SERVICE_ID`: 你的 Service ID
+
+4. **啟用 GitHub Actions**
+   - 推送程式碼後，GitHub Actions 會自動執行
+   - 每天 08:00 自動啟動，23:00 自動停止
+
 
 ## Google Sheets 結構
 

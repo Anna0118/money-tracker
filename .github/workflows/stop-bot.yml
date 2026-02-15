@@ -1,0 +1,24 @@
+name: Stop Bot (Night)
+
+on:
+  schedule:
+    # 每天晚上 11:00 (UTC 15:00) 停止
+    - cron: '0 15 * * *'
+  workflow_dispatch: # 允許手動觸發
+
+jobs:
+  stop-service:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Stop Zeabur Service
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.ZEABUR_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            https://gateway.zeabur.com/graphql \
+            -d '{
+              "query": "mutation { suspendService(serviceID: \"${{ secrets.ZEABUR_SERVICE_ID }}\") }"
+            }'
+      
+      - name: Notify Success
+        run: echo "🌙 Bot stopped successfully at $(date)"
